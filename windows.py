@@ -82,7 +82,7 @@ def get_echo_images(filename = "", coordinates = [], depth = 0):
         globals.images = [x.get() for x in denoise_futures]
         globals.images = np.array(globals.images)
 
-        return globals.images,cine_rate, depth
+        return filename, globals.images,cine_rate, depth
     
 def crop_and_canny(images):
     masked_images = []
@@ -163,7 +163,7 @@ def get_distance(images,images_masked,x,y1,y2, length_frame,depth):
     axs[1].title.set_text("Masked crop")
     axs[2].title.set_text("Diaphragm thickness over time")
     axs[2].set_xlabel('Time (s)')
-    axs[2].set_ylabel('Distance (cm)')
+    axs[2].set_ylabel('Distance (mm)')
     globals.masked_image_thick = axs[1].imshow(images_masked[0], cmap="gray")
     globals.cropped_image_thick = axs[0].imshow(globals.cropped_images[0], cmap="gray")
 
@@ -212,7 +212,7 @@ def get_TF():
     axs = [fig.add_subplot(gs[0,0])]
     axs[0].plot(time_distance,distances, color='black')
     axs[0].set_title('Diaphragm distance over time')
-    axs[0].set_ylabel('Thickness (cm)')
+    axs[0].set_ylabel('Thickness (mm)')
     axs[0].set_xlabel('Time (s)')
 
     total_clicks=2
@@ -444,7 +444,7 @@ def get_TF():
     return peaks, valleys, TF, meanTF, indices_peaks, indices_valleys
 
 
-def save(peaks,valleys,TF,meanTF,indices_peaks, indices_valleys):
+def save(filename,peaks,valleys,TF,meanTF,indices_peaks, indices_valleys):
     
 
 
@@ -558,4 +558,5 @@ def save(peaks,valleys,TF,meanTF,indices_peaks, indices_valleys):
 
     sheet.add_chart(chart, "G2")
             
-    wb.save("name_file.xlsx")
+            
+    wb.save(".".join(filename.split(".")[:-1]) + "-output.xlsx")

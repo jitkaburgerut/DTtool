@@ -4,7 +4,7 @@ from helper import on_c_press
 
 
 
-[images,cine_rate, depth]=get_echo_images()
+[filename,images,cine_rate, depth]=get_echo_images()
 
 length_frame = 1 / cine_rate 
 
@@ -21,5 +21,5 @@ keyboard_listener_c.stop()
 
 [peaks, valleys, TF, meanTF,indices_peaks, indices_valleys]=get_TF()
 
-save(peaks, valleys, TF, meanTF,indices_peaks, indices_valleys)
+save(filename,peaks, valleys, TF, meanTF,indices_peaks, indices_valleys)
 
